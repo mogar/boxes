@@ -1,7 +1,7 @@
 from PIL import Image
 from math import sin, cos, pi, radians, ceil
-import sys
-
+import sys, time
+from datetime import date
 import Image, ImageDraw
 
 def plotterify(points):
@@ -205,7 +205,7 @@ def print_to_plt(design, filename="box.plt"):
 if __name__=='__main__':
 	if len(sys.argv) != 7:
 		print len(sys.argv)
-		raise Exception( "Usage: python2.7 boxes.py width length depth stockwidth dovetail_width top" )
+		raise Exception( "Usage: python boxes.py width length depth stockwidth dovetail_width top" )
 	
 	values = [int(sys.argv[i]) for i in range(1,6)]
 	for i in range(0, 5):
@@ -221,5 +221,6 @@ if __name__=='__main__':
 	
 	laserbox = LaserBox(values[0], values[1], values[2], values[3], values[4])
 	design = laserbox.design(top)
-	print_design_image(design, "test_image.png")
-	print_to_plt(design, "boxes_output.plt")
+	output_string = "box_" + time.strftime("%d%m%y_%H%M%S", time.localtime())
+	print_design_image(design, output_string + ".png")
+	print_to_plt(design, output_string + ".plt")
